@@ -14,13 +14,29 @@ defmodule EctoJsonb do
       :world
 
   """
-  defmacro get_text_in(jsonb, path) do
+  defmacro get_text_in(jsonb, path) when is_binary(path) do
     quote do
       fragment("? #>> ?", unquote(jsonb), unquote(path))
     end
   end
 
-  defmacro get_object_in(jsonb, path) do
+  defmacro get_text_in(jsonb, path) when is_list(path) do
+    path = "{" <> Enum.join(path, ",") <> "}"
+
+    quote do
+      fragment("? #>> ?", unquote(jsonb), unquote(path))
+    end
+  end
+
+  defmacro get_object_in(jsonb, path) when is_binary(path) do
+    quote do
+      fragment("? #> ?", unquote(jsonb), unquote(path))
+    end
+  end
+
+  defmacro get_object_in(jsonb, path) when is_list(path) do
+    path = "{" <> Enum.join(path, ",") <> "}"
+
     quote do
       fragment("? #> ?", unquote(jsonb), unquote(path))
     end
