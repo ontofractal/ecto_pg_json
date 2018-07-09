@@ -2,7 +2,7 @@ defmodule EctoJsonb do
   import Ecto.Query
 
   @moduledoc """
-  Documentation for EctoJsonb.
+  An Ecto extension for Postgres JSONB operators
   """
 
   @doc """
@@ -35,6 +35,18 @@ defmodule EctoJsonb do
   defmacro get_text(jsonb, field_or_index) do
     quote do
       fragment("? ->> ?", unquote(jsonb), unquote(field_or_index))
+    end
+  end
+
+  defmacro left_contains?(left_jsonb, right_jsonb) do
+    quote do
+      fragment("? @> ?", unquote(left_jsonb), unquote(right_jsonb))
+    end
+  end
+
+  defmacro right_contains?(left_jsonb, right_jsonb) do
+    quote do
+      fragment("? <@ ?", unquote(left_jsonb), unquote(right_jsonb))
     end
   end
 end
