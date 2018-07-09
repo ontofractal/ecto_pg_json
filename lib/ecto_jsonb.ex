@@ -14,15 +14,16 @@ defmodule EctoJsonb do
       :world
 
   """
-  defmacro get_text(jsonb, path) do
+  defmacro get_text_in(jsonb, path) do
     quote do
       fragment("? #>> ?", unquote(jsonb), unquote(path))
     end
   end
 
-  defmacro get_object(jsonb, path) do
+  defmacro get_object_in(jsonb, path) do
     quote do
       fragment("? #> ?", unquote(jsonb), unquote(path))
     end
   end
+
 end
