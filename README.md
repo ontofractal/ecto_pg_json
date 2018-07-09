@@ -1,6 +1,6 @@
 # EctoJsonb
 
-**TODO: Add description**
+An Ecto extension for JSONB operators. You need to `require EctoJsonb` before using the macros in the context of Ecto query.
 
 ## Installation
 
@@ -18,4 +18,3 @@ end
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/ecto_jsonb](https://hexdocs.pm/ecto_jsonb).
-
