@@ -23,3 +23,4 @@ erl_crash.dump
 ecto_jsonb-*.tar
 
 /.elixir_ls
+/_build
