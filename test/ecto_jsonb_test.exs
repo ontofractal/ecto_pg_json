@@ -13,4 +13,13 @@ defmodule EctoJsonbTest do
 
     assert TestRepo.one(q) == 1
   end
+
+  test "get_object macro" do
+    q =
+      from t in @table,
+        where: t.id == 2,
+        select: get_object(t.attributes, "data")
+
+    assert TestRepo.one(q) == %{"level2" => "yep"}
+  end
 end
