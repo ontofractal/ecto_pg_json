@@ -22,4 +22,20 @@ defmodule EctoJsonbTest do
 
     assert TestRepo.one(q) == %{"level2" => "yep"}
   end
+
+  test "get_text_in macro" do
+    q =
+      from t in @table,
+        where: t.id == 2,
+        select: get_text_in(t.attributes, "{data, level2}")
+
+    q2 =
+      from t in @table,
+        where: t.id == 2,
+        select: get_text_in(t.attributes, ["data", "level2"])
+
+    assert TestRepo.one(q) == TestRepo.one(q2)
+    assert TestRepo.one(q) == "yep"
+  end
+  
 end
