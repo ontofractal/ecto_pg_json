@@ -37,5 +37,19 @@ defmodule EctoJsonbTest do
     assert TestRepo.one(q) == TestRepo.one(q2)
     assert TestRepo.one(q) == "yep"
   end
-  
+
+  test "get_object_in macro" do
+    q =
+      from t in @table,
+        where: t.id == 3,
+        select: get_object_in(t.attributes, "{data, level2}")
+
+    q2 =
+      from t in @table,
+        where: t.id == 3,
+        select: get_object_in(t.attributes, ["data", "level2"])
+
+    assert TestRepo.one(q) == TestRepo.one(q2)
+    assert TestRepo.one(q) == %{"level3" => "yepyep"}
+  end
 end

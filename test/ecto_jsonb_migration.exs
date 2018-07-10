@@ -13,7 +13,8 @@ defmodule TestMigration do
       insert into metrics (id, attributes)
       values
         (1, '{"data": "nope"}'),
-        (2, '{"data": {"level2": "yep"}}');
+        (2, '{"data": {"level2": "yep"}}'),
+        (3, '{"data": {"level2": {"level3": "yepyep"}}}');
     """
   end
 
