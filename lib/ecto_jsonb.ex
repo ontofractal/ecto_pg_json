@@ -65,4 +65,22 @@ defmodule EctoJsonb do
       fragment("? <@ ?", unquote(left_jsonb), unquote(right_jsonb))
     end
   end
+
+  defmacro keys_exist?(jsonb, string) when is_binary(string) do
+    quote do
+      fragment("? ? ?", unquote(jsonb), "?", unquote(string))
+    end
+  end
+
+  defmacro keys_exist?(jsonb, any: strings) when is_list(strings) do
+    quote do
+      fragment("? ?| ?", unquote(jsonb), unquote(strings))
+    end
+  end
+
+  defmacro keys_exist?(jsonb, all: strings) when is_list(strings) do
+    quote do
+      fragment("? ?& ?", unquote(jsonb), unquote(strings))
+    end
+  end
 end
