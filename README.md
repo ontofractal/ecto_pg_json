@@ -4,8 +4,9 @@ An Ecto extension for JSONB operators. You need to `import EctoPgJson` before us
 
 # Implemented operators and functions
 
+
 | PG operator	| right PG operand type | EctoPgJson function| description |
-|---	|---	|---	|---	|---	|
+| ---	| ---	| ---	| ---	|
 | ->	|int	| get_object(jsonb, field) | Get JSON array element |
 | ->	|text	| get_object(jsonb, field) | Get JSON object field by key |
 | ->> |int	| get_text(jsonb, field) | Get JSON array element as text |
