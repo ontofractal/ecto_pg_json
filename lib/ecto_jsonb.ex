@@ -1,4 +1,4 @@
-defmodule EctoJsonb do
+defmodule EctoPgJson do
   import Ecto.Query
 
   @moduledoc """

@@ -1,6 +1,6 @@
-# EctoJsonb
+# EctoPgJson
 
-An Ecto extension for JSONB operators. You need to `require EctoJsonb` before using the macros in the context of Ecto query.
+An Ecto extension for JSONB operators. You need to `import EctoPgJson` before using the macros in the context of Ecto query.
 
 ## Installation
 
@@ -10,7 +10,7 @@ by adding `ecto_jsonb` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:ecto_jsonb, "~> 0.1.0"}
+    {:ecto_pg_json, "~> 0.1.0"}
   ]
 end
 ```

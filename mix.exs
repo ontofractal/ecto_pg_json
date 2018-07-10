@@ -1,9 +1,9 @@
-defmodule EctoJsonb.MixProject do
+defmodule EctoPgJson.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :ecto_pgjson,
+      app: :ecto_pg_json,
       version: "0.1.0",
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,

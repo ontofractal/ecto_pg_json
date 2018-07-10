@@ -1,7 +1,7 @@
-defmodule EctoJsonbTest do
+defmodule EctoPgJsonTest do
   use EctoPgJson.TestCase
 
-  import EctoJsonb
+  import EctoPgJson
   import Ecto.Query
   @table "metrics"
 
