@@ -1,22 +1,22 @@
 defmodule EctoPgJson.Experimental do
   import Ecto.Query
 
-  @valid_types ~w(float integer timestamp timestamptz decimal numeric
-  FLOAT INTEGER TIMESTAMP TIMESTAMPTZ DECIMAL NUMERIC)
-
   @moduledoc """
   An Ecto extension for Postgres JSONB operators
   """
 
-  defmacro json_get(json, key) when is_binary(key) do
+  defmacro json_get(json, key_or_index)
+           when is_binary(key_or_index) or is_integer(key_or_index) do
     quote do
-      fragment("? -> ?", unquote(json), unquote(key))
+      fragment("? -> ?", unquote(json), unquote(key_or_index))
     end
   end
 
-  defmacro json_get(json, index) when is_integer(index) do
+  defmacro json_get(json, path) when is_list(path) do
+    path = build_path_from_list(path)
+
     quote do
-      fragment("? -> ?", unquote(json), unquote(index))
+      fragment("? #> ?", unquote(json), unquote(path))
     end
   end
 
@@ -32,28 +32,6 @@ defmodule EctoPgJson.Experimental do
     end
   end
 
-  defmacro json_get(json, key, type)
-           when is_binary(key) and type in @valid_types do
-    quote do
-      fragment("(? ->> ?)::?", unquote(json), unquote(key), unquote(type))
-    end
-  end
-
-  defmacro json_get(json, index, type)
-           when is_integer(index) and type in @valid_types do
-    quote do
-      fragment("(? ->> ?)::?", unquote(json), unquote(index), unquote(type))
-    end
-  end
-
-  defmacro json_get(json, path) when is_list(path) do
-    path = "{" <> Enum.join(path, ",") <> "}"
-
-    quote do
-      fragment("? #> ?", unquote(json), unquote(path))
-    end
-  end
-
   defmacro json_get(json, path, :text) when is_list(path) do
     path = "{" <> Enum.join(path, ",") <> "}"
 
@@ -62,12 +40,39 @@ defmodule EctoPgJson.Experimental do
     end
   end
 
-  defmacro json_get(json, path, type)
-           when is_list(path) and type in @valid_types do
-    path = "{" <> Enum.join(path, ",") <> "}"
+  defmacro json_get(json, path, :float) when is_list(path) do
+    path = build_path_from_list(path)
 
     quote do
-      fragment("(? #>> ?)::?", unquote(json), unquote(path), unquote(type))
+      fragment("(? #>> ?)::FLOAT", unquote(json), unquote(path))
     end
+  end
+
+  defmacro json_get(json, path, :integer) when is_list(path) do
+    path = build_path_from_list(path)
+
+    quote do
+      fragment("(? #>> ?)::INTEGER", unquote(json), unquote(path))
+    end
+  end
+
+  defmacro json_get(json, path, :decimal) when is_list(path) do
+    path = build_path_from_list(path)
+
+    quote do
+      fragment("(? #>> ?)::DECIMAL", unquote(json), unquote(path))
+    end
+  end
+
+  defmacro json_get(json, path, :numeric) when is_list(path) do
+    path = build_path_from_list(path)
+
+    quote do
+      fragment("(? #>> ?)::NUMERIC", unquote(json), unquote(path))
+    end
+  end
+
+  def build_path_from_list(args) when is_list(args) do
+    "{" <> Enum.join(args, ",") <> "}"
   end
 end

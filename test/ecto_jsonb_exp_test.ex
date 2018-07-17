@@ -40,4 +40,22 @@ defmodule EctoPgJsonTest.Experimental do
 
     assert TestRepo.one(q) == %{"level3" => "yepyep"}
   end
+
+  test "json_get for #>> operator with casting to integer" do
+    q =
+      from t in @table,
+        where: t.id == 4,
+        select: json_get(t.attributes, ["data", "level2", "level3"], :integer)
+
+    assert TestRepo.one(q) == 222
+  end
+
+  test "json_get for #>> operator with casting to float" do
+    q =
+      from t in @table,
+        where: t.id == 4,
+        select: json_get(t.attributes, ["data", "level2", "level3"], :float)
+
+    assert TestRepo.one(q) == 222.0
+  end
 end
