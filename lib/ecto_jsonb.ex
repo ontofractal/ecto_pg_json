@@ -58,7 +58,7 @@ defmodule EctoPgJson do
 
   Accepts jsonb column as a first argument and a field or index as a second argument.
   """
-  defmacro get_object(jsonb, field_or_index) do
+  defmacro get_object(jsonb, field_or_index) when is_binary(field_or_index) do
     quote do
       fragment("? -> ?", unquote(jsonb), unquote(field_or_index))
     end
@@ -69,7 +69,7 @@ defmodule EctoPgJson do
 
   Accepts jsonb column as a first argument and a field or index as a second argument.
   """
-  defmacro get_text(jsonb, field_or_index) do
+  defmacro get_text(jsonb, field_or_index) when is_binary(field_or_index) do
     quote do
       fragment("? ->> ?", unquote(jsonb), unquote(field_or_index))
     end
