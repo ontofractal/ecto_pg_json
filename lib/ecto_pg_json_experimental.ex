@@ -35,14 +35,14 @@ defmodule EctoPgJson.Experimental do
   defmacro json_get(json, key, type)
            when is_binary(key) and type in @valid_types do
     quote do
-      fragment("(? ->> ?)::#{type}", unquote(json), unquote(key))
+      fragment("(? ->> ?)::?", unquote(json), unquote(key), unquote(type))
     end
   end
 
   defmacro json_get(json, index, type)
            when is_integer(index) and type in @valid_types do
     quote do
-      fragment("(? ->> ?)::#{type}", unquote(json), unquote(index))
+      fragment("(? ->> ?)::?", unquote(json), unquote(index), unquote(type))
     end
   end
 
@@ -50,7 +50,7 @@ defmodule EctoPgJson.Experimental do
     path = "{" <> Enum.join(path, ",") <> "}"
 
     quote do
-      fragment("(? #> ?)::#{type}", unquote(json), unquote(path))
+      fragment("? #> ?", unquote(json), unquote(path))
     end
   end
 
@@ -58,7 +58,7 @@ defmodule EctoPgJson.Experimental do
     path = "{" <> Enum.join(path, ",") <> "}"
 
     quote do
-      fragment("(? #> ?)::#{type}", unquote(json), unquote(path))
+      fragment("? #>> ?", unquote(json), unquote(path))
     end
   end
 
@@ -67,7 +67,7 @@ defmodule EctoPgJson.Experimental do
     path = "{" <> Enum.join(path, ",") <> "}"
 
     quote do
-      fragment("(? #>> ?)::#{type}", unquote(json), unquote(path))
+      fragment("(? #>> ?)::?", unquote(json), unquote(path), unquote(type))
     end
   end
 end

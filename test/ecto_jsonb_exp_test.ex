@@ -24,7 +24,7 @@ defmodule EctoPgJsonTest.Experimental do
   end
 
   test "json_get for #>> operator" do
-    q2 =
+    q =
       from t in @table,
         where: t.id == 2,
         select: json_get(t.attributes, ["data", "level2"], :text)
@@ -36,7 +36,7 @@ defmodule EctoPgJsonTest.Experimental do
     q =
       from t in @table,
         where: t.id == 3,
-        select: get_object_in(t.attributes, "{data, level2}")
+        select: json_get(t.attributes, ["data", "level2"])
 
     assert TestRepo.one(q) == %{"level3" => "yepyep"}
   end
