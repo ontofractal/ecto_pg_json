@@ -45,4 +45,26 @@ defmodule EctoPgJson.Experimental do
       fragment("(? ->> ?)::#{type}", unquote(json), unquote(index))
     end
   end
+
+  defmacro json_get(json, path) when is_list(path) do
+    quote do
+      path = "{" <> Enum.join(path, ",") <> "}"
+      fragment("(? #> ?)::#{type}", unquote(json), unquote(path))
+    end
+  end
+
+  defmacro json_get(json, path, :text) when is_list(path) do
+    quote do
+      path = "{" <> Enum.join(path, ",") <> "}"
+      fragment("(? #> ?)::#{type}", unquote(json), unquote(path))
+    end
+  end
+
+  defmacro json_get(json, path, type)
+           when is_list(path) and type in @valid_types do
+    quote do
+      path = "{" <> Enum.join(path, ",") <> "}"
+      fragment("(? #>> ?)::#{type}", unquote(json), unquote(path))
+    end
+  end
 end
