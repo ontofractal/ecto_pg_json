@@ -54,7 +54,14 @@ defmodule EctoPgJson.Experimental do
     quote do: fragment("(? #>> ?)::NUMERIC", unquote(json), unquote(path))
   end
 
+  defmacro json_contains?(json, map) do
+    quote do
+      fragment("? @> ?", unquote(json), unquote(map))
+    end
+  end
+
   def build_path_from_list(args) when is_list(args) do
     "{" <> Enum.join(args, ",") <> "}"
   end
+
 end

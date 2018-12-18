@@ -58,4 +58,13 @@ defmodule EctoPgJsonTest.Experimental do
 
     assert TestRepo.one(q) == 222.0
   end
+
+  test "json_contains a map" do
+    q =
+      from t in @table,
+        where: json_contains?(t.attributes, ^%{"data" => "nope"}),
+        select: t.id
+
+    assert TestRepo.one(q) == 1
+  end
 end
