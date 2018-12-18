@@ -26,7 +26,7 @@ defmodule EctoPgJson.MixProject do
       {:ecto, "~> 3.0"},
       {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
-      {:poison, ">= 0.0.0"}
+      {:jason, "~> 1.0"}
     ]
   end
 end
