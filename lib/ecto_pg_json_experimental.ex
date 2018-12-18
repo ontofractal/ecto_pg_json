@@ -60,6 +60,12 @@ defmodule EctoPgJson.Experimental do
     end
   end
 
+  defmacro json_has_key?(json, string) do
+    quote do
+      fragment("? \\? ?", unquote(json), unquote(string))
+    end
+  end
+
   def build_path_from_list(args) when is_list(args) do
     "{" <> Enum.join(args, ",") <> "}"
   end
