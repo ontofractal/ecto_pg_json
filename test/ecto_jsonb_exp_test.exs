@@ -67,4 +67,13 @@ defmodule EctoPgJsonTest.Experimental do
 
     assert TestRepo.one(q) == 1
   end
+
+  test "json_has_key?" do
+    q =
+      from t in @table,
+        where: json_has_key?(t.attributes, "metadata"),
+        select: t.id
+
+    assert TestRepo.one(q) == 5
+  end
 end

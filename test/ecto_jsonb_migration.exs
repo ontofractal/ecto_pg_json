@@ -15,7 +15,8 @@ defmodule TestMigration do
         (1, '{"data": "nope"}'),
         (2, '{"data": {"level2": "yep"}}'),
         (3, '{"data": {"level2": {"level3": "yepyep"}}}'),
-        (4, '{"data": {"level2": {"level3": "222"}}}');
+        (4, '{"data": {"level2": {"level3": "222"}}}'),
+        (5, '{"metadata": {}}');
     """
   end
 
