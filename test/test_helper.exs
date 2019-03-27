@@ -1,18 +1,16 @@
 ExUnit.start()
 
-Code.require_file "ecto_jsonb_migration.exs", __DIR__
-
+Code.require_file("ecto_jsonb_migration.exs", __DIR__)
 
 Application.put_env(
   :ecto,
   TestRepo,
-  adapter: Ecto.Adapters.Postgres,
   url: "ecto://postgres:postgres@localhost/ecto_pg_json_test",
   pool: Ecto.Adapters.SQL.Sandbox
 )
 
 defmodule TestRepo do
-  use Ecto.Repo, otp_app: :ecto
+  use Ecto.Repo, otp_app: :ecto, adapter: Ecto.Adapters.Postgres
 end
 
 defmodule EctoPgJson.TestCase do
