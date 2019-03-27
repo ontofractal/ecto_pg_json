@@ -4,7 +4,7 @@ defmodule EctoPgJson.MixProject do
   def project do
     [
       app: :ecto_pg_json,
-      version: "0.2.0",
+      version: "0.3.0",
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
       deps: deps()
@@ -23,7 +23,7 @@ defmodule EctoPgJson.MixProject do
       {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
       {:jason, "~> 1.0"},
-      {:mix_test_watch, "~> 0.8", only: :dev, runtime: false}  
+      {:mix_test_watch, "~> 0.8", only: :dev, runtime: false}
     ]
   end
 end
